@@ -34,13 +34,10 @@ import numpy as np
 import struct
 import argparse
 
-
 CameraModel = collections.namedtuple(
     "CameraModel", ["model_id", "model_name", "num_params"]
 )
-Camera = collections.namedtuple(
-    "Camera", ["id", "model", "width", "height", "params"]
-)
+Camera = collections.namedtuple("Camera", ["id", "model", "width", "height", "params"])
 BaseImage = collections.namedtuple(
     "Image", ["id", "qvec", "tvec", "camera_id", "name", "xys", "point3D_ids"]
 )
@@ -266,9 +263,9 @@ def read_images_binary(path_to_model_file):
             while current_char != b"\x00":  # look for the ASCII 0 entry
                 image_name += current_char.decode("utf-8")
                 current_char = read_next_bytes(fid, 1, "c")[0]
-            num_points2D = read_next_bytes(
-                fid, num_bytes=8, format_char_sequence="Q"
-            )[0]
+            num_points2D = read_next_bytes(fid, num_bytes=8, format_char_sequence="Q")[
+                0
+            ]
             x_y_id_s = read_next_bytes(
                 fid,
                 num_bytes=24 * num_points2D,
@@ -403,9 +400,9 @@ def read_points3D_binary(path_to_model_file):
             xyz = np.array(binary_point_line_properties[1:4])
             rgb = np.array(binary_point_line_properties[4:7])
             error = np.array(binary_point_line_properties[7])
-            track_length = read_next_bytes(
-                fid, num_bytes=8, format_char_sequence="Q"
-            )[0]
+            track_length = read_next_bytes(fid, num_bytes=8, format_char_sequence="Q")[
+                0
+            ]
             track_elems = read_next_bytes(
                 fid,
                 num_bytes=8 * track_length,
